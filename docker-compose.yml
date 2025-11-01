@@ -50,6 +50,8 @@ services:
     depends_on:
       - bitcoin-main
     restart: unless-stopped
+    environment:
+      TERM: xterm
     command: >
       bfgminer -S noauto -o http://bitcoin-main:8332 -O ${RPC_USER:-rpcuser_main}:${RPC_PASSWORD:-rpcpass_main}
       --stratum-port 3333 --coinbase-addr ${PAYOUT_ADDRESS:-1D7VcBnYgCW6zqNP4NmdS4kia4yLGHNfw}
@@ -65,6 +67,8 @@ services:
     depends_on:
       - bitcoin-testnet
     restart: unless-stopped
+    environment:
+      TERM: xterm
     command: >
       bfgminer -S noauto -o http://bitcoin-testnet:18332 -O ${RPC_USER_TESTNET:-rpcuser_test}:${RPC_PASSWORD_TESTNET:-rpcpass_test}
       --stratum-port 13333 --coinbase-addr ${PAYOUT_ADDRESS_TESTNET:-mzpJE5cWrFzGuVr1SidxEsRBDgFgPC5VmD}
@@ -81,7 +85,7 @@ services:
       - bitcoin-main
     restart: unless-stopped
     volumes:
-      - ./ckpool/mainnet:/srv/ckpool:ro
+      - ./ckpool/ckpool.mainnet.conf:/srv/ckpool/ckpool.conf:ro
     ports:
       - "3334:3333"   # expose as 3334 (container listens 3333)
 
@@ -93,7 +97,7 @@ services:
       - bitcoin-testnet
     restart: unless-stopped
     volumes:
-      - ./ckpool/testnet:/srv/ckpool:ro
+      - ./ckpool/ckpool.testnet.conf:/srv/ckpool/ckpool.conf:ro
     ports:
       - "13334:3333"  # expose as 13334 (container listens 3333)
 
