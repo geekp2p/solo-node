@@ -5,7 +5,7 @@ services:
     container_name: bitcoind-main
     restart: unless-stopped
     volumes:
-      - bitcoin-main-data:/home/bitcoin/.bitcoin
+      - ${BITCOIN_MAIN_DATA_PATH:-bitcoin-main-data}:/home/bitcoin/.bitcoin
       - ./bitcoin-main:/etc/bitcoin:ro
     command: [
       "bitcoind",
@@ -16,7 +16,7 @@ services:
     ports:
       - "8333:8333"   # P2P mainnet
     healthcheck:
-      test: ["CMD", "bash", "-lc", "bitcoin-cli -conf=/home/bitcoin/.bitcoin/bitcoin.conf getblockchaininfo | grep -q headers"]
+      test: ["CMD", "bash", "-lc", "bitcoin-cli -conf=/etc/bitcoin/bitcoin.conf -datadir=/home/bitcoin/.bitcoin getblockchaininfo | grep -q headers"]
       interval: 30s
       timeout: 10s
       retries: 20
@@ -27,7 +27,7 @@ services:
     container_name: bitcoind-testnet
     restart: unless-stopped
     volumes:
-      - bitcoin-testnet-data:/home/bitcoin/.bitcoin
+      - ${BITCOIN_TESTNET_DATA_PATH:-bitcoin-testnet-data}:/home/bitcoin/.bitcoin
       - ./bitcoin-testnet:/etc/bitcoin:ro
     command: [
       "bitcoind",
@@ -38,7 +38,7 @@ services:
     ports:
       - "18333:18333" # P2P testnet
     healthcheck:
-      test: ["CMD", "bash", "-lc", "bitcoin-cli -conf=/home/bitcoin/.bitcoin/bitcoin.conf -testnet getblockchaininfo | grep -q headers"]
+      test: ["CMD", "bash", "-lc", "bitcoin-cli -conf=/etc/bitcoin/bitcoin.conf -datadir=/home/bitcoin/.bitcoin -testnet getblockchaininfo | grep -q headers"]
       interval: 30s
       timeout: 10s
       retries: 20
