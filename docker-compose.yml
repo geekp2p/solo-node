@@ -67,7 +67,7 @@ services:
     restart: unless-stopped
     command: >
       bfgminer -S noauto -o http://bitcoin-testnet:18332 -O ${RPC_USER_TESTNET:-rpcuser_test}:${RPC_PASSWORD_TESTNET:-rpcpass_test}
-      --stratum-port 13333 --coinbase-addr ${PAYOUT_ADDRESS_TESTNET:-tb1pvl0xwdnep3zvnvep9c7zxtr27dgdat659v89y5tp0e5g9qyutddsr88rwf}
+      --stratum-port 13333 --coinbase-addr ${PAYOUT_ADDRESS_TESTNET:-mzpJE5cWrFzGuVr1SidxEsRBDgFgPC5VmD}
       --no-getwork --no-submit-stale
     env_file: .env
     ports:
