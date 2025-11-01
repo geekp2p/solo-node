@@ -52,7 +52,7 @@ services:
     restart: unless-stopped
     command: >
       bfgminer -S noauto -o http://bitcoin-main:8332 -O ${RPC_USER:-rpcuser_main}:${RPC_PASSWORD:-rpcpass_main}
-      --stratum-port 3333 --coinbase-addr ${PAYOUT_ADDRESS:-bc1qxane6et6xdn6av99hanquxr839wmpl33q9ul5s}
+      --stratum-port 3333 --coinbase-addr ${PAYOUT_ADDRESS:-1D7VcBnYgCW6zqNP4NmdS4kia4yLGHNfw}
       --no-getwork --no-submit-stale
     env_file: .env
     ports:
