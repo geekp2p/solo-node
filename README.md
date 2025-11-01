@@ -37,6 +37,18 @@ paths while still mounting the configuration directories from the repository
 read-only. Because `bitcoin.conf` remains mounted from `./bitcoin-main` and
 `./bitcoin-testnet` you do **not** need to copy it into the data folders.
 
+### Troubleshooting
+
+#### `open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.`
+
+This error from `docker compose` indicates that Docker Desktop is not
+running or its backend service (the Windows named pipe
+`dockerDesktopLinuxEngine`) is unavailable. Start Docker Desktop and wait for
+it to report that the Docker engine is running before rerunning `docker
+compose up`. If the problem persists, restart Docker Desktop or reboot the
+host to re-establish the named pipe connection.
+
+
 ## Payout addresses in this pack
 - Mainnet: `bc1qxane6et6xdn6av99hanquxr839wmpl33q9ul5s`
 - Testnet: `tb1pvl0xwdnep3zvnvep9c7zxtr27dgdat659v89y5tp0e5g9qyutddsr88rwf`
