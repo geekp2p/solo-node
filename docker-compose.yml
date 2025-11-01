@@ -51,8 +51,8 @@ services:
       - bitcoin-main
     restart: unless-stopped
     command: >
-      bfgminer -S noauto -o http://bitcoin-main:8332 -O ${RPC_USER}:${RPC_PASSWORD}
-      --stratum-port 3333 --coinbase-addr ${PAYOUT_ADDRESS}
+      bfgminer -S noauto -o http://bitcoin-main:8332 -O ${RPC_USER:-rpcuser_main}:${RPC_PASSWORD:-rpcpass_main}
+      --stratum-port 3333 --coinbase-addr ${PAYOUT_ADDRESS:-bc1qxane6et6xdn6av99hanquxr839wmpl33q9ul5s}
       --no-getwork --no-submit-stale
     env_file: .env
     ports:
@@ -66,8 +66,8 @@ services:
       - bitcoin-testnet
     restart: unless-stopped
     command: >
-      bfgminer -S noauto -o http://bitcoin-testnet:18332 -O ${RPC_USER_TESTNET}:${RPC_PASSWORD_TESTNET}
-      --stratum-port 13333 --coinbase-addr ${PAYOUT_ADDRESS_TESTNET}
+      bfgminer -S noauto -o http://bitcoin-testnet:18332 -O ${RPC_USER_TESTNET:-rpcuser_test}:${RPC_PASSWORD_TESTNET:-rpcpass_test}
+      --stratum-port 13333 --coinbase-addr ${PAYOUT_ADDRESS_TESTNET:-tb1pvl0xwdnep3zvnvep9c7zxtr27dgdat659v89y5tp0e5g9qyutddsr88rwf}
       --no-getwork --no-submit-stale
     env_file: .env
     ports:
@@ -81,7 +81,7 @@ services:
       - bitcoin-main
     restart: unless-stopped
     volumes:
-      - ./ckpool/ckpool.mainnet.conf:/srv/ckpool/ckpool.conf:ro
+      - ./ckpool/mainnet:/srv/ckpool:ro
     ports:
       - "3334:3333"   # expose as 3334 (container listens 3333)
 
@@ -93,7 +93,7 @@ services:
       - bitcoin-testnet
     restart: unless-stopped
     volumes:
-      - ./ckpool/ckpool.testnet.conf:/srv/ckpool/ckpool.conf:ro
+      - ./ckpool/testnet:/srv/ckpool:ro
     ports:
       - "13334:3333"  # expose as 13334 (container listens 3333)
 

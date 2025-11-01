@@ -11,12 +11,28 @@ docker logs -f bitcoind-testnet
 - Testnet Stratum (BFGMiner): `stratum+tcp://<HOST_IP>:13333`
 - Testnet Stratum (CKPool):   `stratum+tcp://<HOST_IP>:13334`
 
+Default RPC credentials and payout addresses are baked into the
+`docker-compose.yml` so the stack works out of the box. If you would like to
+override them, create a `.env` file alongside `docker-compose.yml` with any of
+the following variables:
+
+```
+RPC_USER=customrpcuser
+RPC_PASSWORD=custommainpass
+RPC_USER_TESTNET=customtestrpc
+RPC_PASSWORD_TESTNET=customtestpass
+PAYOUT_ADDRESS=bc1...
+PAYOUT_ADDRESS_TESTNET=tb1...
+```
+
+Any values omitted from `.env` fall back to the defaults shown in this README.
+
 The Bitcoin Core containers now keep their block data inside Docker named
 volumes (`solo-node_bitcoin-main-data` and `solo-node_bitcoin-testnet-data`).
-This keeps configuration files that live in `bitcoin-main/` and
-`bitcoin-testnet/` mounted read-only inside the containers so they are always
-available. If you prefer to store the blockchain on a different drive you can
-override those named volumes with a host path.
+This keeps configuration files that live in `bitcoin-main/`,
+`bitcoin-testnet/`, and `ckpool/` mounted read-only inside the containers so
+they are always available. If you prefer to store the blockchain on a different
+drive you can override those named volumes with a host path.
 
 ### Storing blockchain data on a different drive (Windows)
 
