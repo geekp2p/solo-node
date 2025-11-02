@@ -67,6 +67,6 @@ host to re-establish the named pipe connection.
 
 ## Payout addresses in this pack
 - Mainnet: `1D7VcBnYgCW6zqNP4NmdS4kia4yLGHNfw`
-- Testnet: `tb1pvl0xwdnep3zvnvep9c7zxtr27dgdat659v89y5tp0e5g9qyutddsr88rwf`
+- Testnet: `mzpJE5cWrFzGuVr1SidxEsRBDgFgPC5VmD`
 
 > Ensure your node is sufficiently synced before expecting work submissions/blocks.
