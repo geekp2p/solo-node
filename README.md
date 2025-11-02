@@ -53,6 +53,23 @@ paths while still mounting the configuration directories from the repository
 read-only. Because `bitcoin.conf` remains mounted from `./bitcoin-main` and
 `./bitcoin-testnet` you do **not** need to copy it into the data folders.
 
+### Connecting miners
+
+Use a Stratum URL (`stratum+tcp://`) that matches the network and pool flavor
+you intend to mine against. Examples for `cpuminer-gw64-corei7`:
+
+```bash
+# Mainnet via the CKPool stratum
+cpuminer-gw64-corei7 -a sha256d -o stratum+tcp://<HOST_IP>:3334 -u <your_mainnet_address> -p x
+
+# Testnet via the CKPool stratum
+cpuminer-gw64-corei7 -a sha256d -o stratum+tcp://<HOST_IP>:13334 -u mzpJE5cWrFzGuVr1SidxEsRBDgFgPC5VmD -p x
+```
+
+Replacing `stratum+tcp://` with `http://` will cause the miner to time out, so
+ensure the scheme and port match one of the Stratum endpoints listed above.
+
+
 ### Troubleshooting
 
 #### `open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.`
