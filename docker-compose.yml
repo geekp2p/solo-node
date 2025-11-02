@@ -89,6 +89,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./ckpool/ckpool.mainnet.conf:/srv/ckpool/ckpool.conf:ro
+      - ./ckpool/ckpool.mainnet.conf:/srv/ckpool/ckpool.conf.json:ro
     ports:
       - "3334:3333"   # expose as 3334 (container listens 3333)
 
@@ -102,6 +103,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./ckpool/ckpool.testnet.conf:/srv/ckpool/ckpool.conf:ro
+      - ./ckpool/ckpool.testnet.conf:/srv/ckpool/ckpool.conf.json:ro
     ports:
       - "13334:3333"  # expose as 13334 (container listens 3333)
 
