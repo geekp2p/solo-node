@@ -16,7 +16,7 @@ services:
     ports:
       - "8333:8333"   # P2P mainnet
     healthcheck:
-      test: ["CMD", "bash", "-lc", "bitcoin-cli -conf=/etc/bitcoin/bitcoin.conf -datadir=/home/bitcoin/.bitcoin getblockchaininfo | grep -q headers"]
+      test: ["CMD-SHELL", "bitcoin-cli -conf=/etc/bitcoin/bitcoin.conf -datadir=/home/bitcoin/.bitcoin getblockchaininfo | grep -q headers"]
       interval: 30s
       timeout: 10s
       retries: 20
@@ -38,7 +38,7 @@ services:
     ports:
       - "18333:18333" # P2P testnet
     healthcheck:
-      test: ["CMD", "bash", "-lc", "bitcoin-cli -conf=/etc/bitcoin/bitcoin.conf -datadir=/home/bitcoin/.bitcoin -testnet getblockchaininfo | grep -q headers"]
+      test: ["CMD-SHELL", "bitcoin-cli -conf=/etc/bitcoin/bitcoin.conf -datadir=/home/bitcoin/.bitcoin -testnet getblockchaininfo | grep -q headers"]
       interval: 30s
       timeout: 10s
       retries: 20
