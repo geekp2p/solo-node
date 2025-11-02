@@ -3,3 +3,9 @@ docker compose up -d --build --force-recreate
 docker compose up -d
 docker logs -f bitcoind-main
 docker logs -f bitcoind-testnet
+
+Mainnet RPC: docker compose exec bitcoind-main bitcoin-cli -getinfo
+
+Testnet RPC: docker compose exec bitcoind-testnet bitcoin-cli -getinfo
+
+Pool health: docker compose logs ckpool-solo-main | tail -n 40
