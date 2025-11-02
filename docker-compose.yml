@@ -53,7 +53,8 @@ services:
     environment:
       TERM: xterm
     command: >
-      bfgminer -S noauto -o http://${RPC_USER:-rpcuser_main}:${RPC_PASSWORD:-rpcpass_main}@bitcoind-main:8332
+      bfgminer -S noauto -o http://bitcoind-main:8332
+      -O ${RPC_USER:-rpcuser_main}:${RPC_PASSWORD:-rpcpass_main}
       --stratum-port 3333 --coinbase-addr ${PAYOUT_ADDRESS:-1D7VcBnYgCW6zqNP4NmdS4kia4yLGHNfw}
       --no-getwork --no-submit-stale
     env_file: .env
@@ -70,7 +71,8 @@ services:
     environment:
       TERM: xterm
     command: >
-      bfgminer -S noauto -o http://${RPC_USER_TESTNET:-rpcuser_test}:${RPC_PASSWORD_TESTNET:-rpcpass_test}@bitcoind-testnet:18332
+      bfgminer -S noauto -o http://bitcoind-testnet:18332
+      -O ${RPC_USER_TESTNET:-rpcuser_test}:${RPC_PASSWORD_TESTNET:-rpcpass_test}
       --stratum-port 13333 --coinbase-addr ${PAYOUT_ADDRESS_TESTNET:-mzpJE5cWrFzGuVr1SidxEsRBDgFgPC5VmD}
       --no-getwork --no-submit-stale
     env_file: .env
