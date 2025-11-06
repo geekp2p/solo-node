@@ -1,6 +1,9 @@
 docker compose up -d --build --force-recreate
 
 docker compose up -d
+
+docker compose up --build
+
 docker logs -f bitcoind-main
 docker logs -f bitcoind-testnet
 

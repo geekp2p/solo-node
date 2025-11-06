@@ -54,10 +54,9 @@ services:
     environment:
       TERM: xterm
     command: >
-      bfgminer -S noauto -o http://bitcoin-main:8332
-      -O ${RPC_USER:-rpcuser_main}:${RPC_PASSWORD:-rpcpass_main}
+      bfgminer -S noauto -o http://${RPC_USER:-rpcuser_main}:${RPC_PASSWORD:-rpcpass_main}@bitcoin-main:8332
       --stratum-port 3333 --coinbase-addr ${PAYOUT_ADDRESS:-1D7VcBnYgCW6zqNP4NmdS4kia4yLGHNfw}
-      --no-getwork --no-submit-stale
+      --no-submit-stale
     env_file: .env
     ports:
       - "3333:3333"   # Stratum mainnet
@@ -73,10 +72,9 @@ services:
     environment:
       TERM: xterm
     command: >
-      bfgminer -S noauto -o http://bitcoin-testnet:18332
-      -O ${RPC_USER_TESTNET:-rpcuser_test}:${RPC_PASSWORD_TESTNET:-rpcpass_test}
+      bfgminer -S noauto -o http://${RPC_USER_TESTNET:-rpcuser_test}:${RPC_PASSWORD_TESTNET:-rpcpass_test}@bitcoin-testnet:18332
       --stratum-port 13333 --coinbase-addr ${PAYOUT_ADDRESS_TESTNET:-mzpJE5cWrFzGuVr1SidxEsRBDgFgPC5VmD}
-      --no-getwork --no-submit-stale
+      --no-submit-stale
     env_file: .env
     ports:
       - "13333:13333" # Stratum testnet
@@ -90,8 +88,8 @@ services:
         condition: service_healthy
     restart: unless-stopped
     volumes:
-      - ./ckpool/ckpool.mainnet.conf:/srv/ckpool/ckpool.conf:ro
-      - ./ckpool/ckpool.mainnet.conf:/srv/ckpool/ckpool.conf.json:ro
+      - ./ckpool/ckpool.mainnet.conf:/etc/ckpool/ckpool.conf:ro
+      - ./ckpool/ckpool.mainnet.conf:/etc/ckpool/ckpool.conf.json:ro
     ports:
       - "3334:3333"   # expose as 3334 (container listens 3333)
 
@@ -104,8 +102,8 @@ services:
         condition: service_healthy
     restart: unless-stopped
     volumes:
-      - ./ckpool/ckpool.testnet.conf:/srv/ckpool/ckpool.conf:ro
-      - ./ckpool/ckpool.testnet.conf:/srv/ckpool/ckpool.conf.json:ro
+      - ./ckpool/ckpool.testnet.conf:/etc/ckpool/ckpool.conf:ro
+      - ./ckpool/ckpool.testnet.conf:/etc/ckpool/ckpool.conf.json:ro
     ports:
       - "13334:3333"  # expose as 13334 (container listens 3333)
 
