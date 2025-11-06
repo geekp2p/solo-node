@@ -23,9 +23,18 @@ RPC_USER_TESTNET=customtestrpc
 RPC_PASSWORD_TESTNET=customtestpass
 PAYOUT_ADDRESS=bc1...
 PAYOUT_ADDRESS_TESTNET=tb1...
+# Point the stack at an external bitcoind host if needed
+BITCOIN_MAIN_RPC_HOST=10.1.1.243
+BITCOIN_MAIN_RPC_PORT=8332
+BITCOIN_TESTNET_RPC_HOST=10.1.1.243
+BITCOIN_TESTNET_RPC_PORT=18332
 ```
 
 Any values omitted from `.env` fall back to the defaults shown in this README.
+
+The CKPool containers now generate their `ckpool.conf` at startup using these
+environment variables, so pointing them at another node or payout address no
+longer requires editing JSON files inside the repo.
 
 The Bitcoin Core containers now keep their block data inside Docker named
 volumes (`solo-node_bitcoin-main-data` and `solo-node_bitcoin-testnet-data`).
