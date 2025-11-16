@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   # ---------- Bitcoin Core (MAINNET) ----------
   bitcoin-main:
@@ -88,6 +86,7 @@ services:
     build:
       context: ./ckpool
     image: local/ckpool-solo
+    pull_policy: never
     container_name: ckpool-solo-main
     depends_on:
       bitcoin-main:
@@ -126,6 +125,7 @@ services:
     build:
       context: ./ckpool
     image: local/ckpool-solo
+    pull_policy: never
     container_name: ckpool-solo-testnet
     depends_on:
       bitcoin-testnet:
