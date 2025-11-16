@@ -16,3 +16,5 @@ Pool health: docker compose logs ckpool-solo-main | tail -n 40
 docker compose logs --tail=50 -f
 
 docker compose exec bitcoin-main bitcoin-cli getblockchaininfo
+
+docker compose exec bitcoin-main bitcoind-testnet getblockchaininfo
