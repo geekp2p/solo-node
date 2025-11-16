@@ -14,6 +14,7 @@ RUN apt-get update \
        libevent-dev \
        libjansson-dev \
        libssl-dev \
+       libcurl4-openssl-dev \
        uthash-dev \
     && rm -rf /var/lib/apt/lists/*
 
@@ -31,6 +32,7 @@ RUN apt-get update \
        libevent-2.1-7 \
        libjansson4 \
        libssl3 \
+       libcurl4 \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /src/ckpool /usr/local/bin/ckpool
