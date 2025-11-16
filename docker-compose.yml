@@ -25,7 +25,32 @@ services:
 
   # ---------- Bitcoin Core (TESTNET) ----------
   bitcoin-testnet:
-    bitcoin-main:
+    image: ruimarinho/bitcoin-core:latest
+    container_name: bitcoind-testnet
+    restart: unless-stopped
+    volumes:
+      - ${BITCOIN_TESTNET_DATA_PATH:-bitcoin-testnet-data}:/home/bitcoin/.bitcoin
+      - ./bitcoin-testnet:/etc/bitcoin:ro
+    command: [
+      "bitcoind",
+      "-conf=/etc/bitcoin/bitcoin.conf",
+      "-datadir=/home/bitcoin/.bitcoin",
+      "-printtoconsole"
+    ]
+    ports:
+      - "18333:18333"   # P2P testnet
+    healthcheck:
+      test: ["CMD-SHELL", "bitcoin-cli -conf=/etc/bitcoin/bitcoin.conf -datadir=/home/bitcoin/.bitcoin getblockchaininfo | grep -q headers"]
+      interval: 30s
+      timeout: 10s
+      retries: 20
+
+  # ---------- Stratum Proxy (MAINNET) via BFGMiner ----------
+  bfgproxy-main:
+    image: wernight/bfgminer:latest
+    container_name: bfgminer-proxy-mainnet
+    depends_on:
+      bitcoin-main:
         condition: service_healthy
     restart: unless-stopped
     environment:
