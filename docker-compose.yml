@@ -1,7 +1,4 @@
-x-ckpool-image: &ckpool-image
-  build:
-    context: ./ckpool
-  image: local/ckpool-solo
+version: "3.8"
 
 services:
   # ---------- Bitcoin Core (MAINNET) ----------
@@ -28,7 +25,7 @@ services:
 
   # ---------- Bitcoin Core (TESTNET) ----------
   bitcoin-testnet:
-      bitcoin-main:
+    bitcoin-main:
         condition: service_healthy
     restart: unless-stopped
     environment:
@@ -63,7 +60,9 @@ services:
 
   # ---------- CKPool (MAINNET) ----------
   ckpool-main:
-    <<: *ckpool-image
+    build:
+      context: ./ckpool
+    image: local/ckpool-solo
     container_name: ckpool-solo-main
     depends_on:
       bitcoin-main:
@@ -99,7 +98,9 @@ services:
 
   # ---------- CKPool (TESTNET) ----------
   ckpool-test:
-    <<: *ckpool-image
+    build:
+      context: ./ckpool
+    image: local/ckpool-solo
     container_name: ckpool-solo-testnet
     depends_on:
       bitcoin-testnet:
