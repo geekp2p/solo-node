@@ -1,3 +1,8 @@
+x-ckpool-image: &ckpool-image
+  build:
+    context: ./ckpool
+  image: local/ckpool-solo
+
 services:
   # ---------- Bitcoin Core (MAINNET) ----------
   bitcoin-main:
@@ -23,31 +28,6 @@ services:
 
   # ---------- Bitcoin Core (TESTNET) ----------
   bitcoin-testnet:
-    image: ruimarinho/bitcoin-core:latest
-    container_name: bitcoind-testnet
-    restart: unless-stopped
-    volumes:
-      - ${BITCOIN_TESTNET_DATA_PATH:-bitcoin-testnet-data}:/home/bitcoin/.bitcoin
-      - ./bitcoin-testnet:/etc/bitcoin:ro
-    command: [
-      "bitcoind",
-      "-conf=/etc/bitcoin/bitcoin.conf",
-      "-datadir=/home/bitcoin/.bitcoin",
-      "-printtoconsole"
-    ]
-    ports:
-      - "18333:18333" # P2P testnet
-    healthcheck:
-      test: ["CMD-SHELL", "bitcoin-cli -conf=/etc/bitcoin/bitcoin.conf -datadir=/home/bitcoin/.bitcoin -testnet getblockchaininfo | grep -q headers"]
-      interval: 30s
-      timeout: 10s
-      retries: 20
-
-  # ---------- Stratum Proxy (MAINNET) via BFGMiner ----------
-  bfgproxy-main:
-    image: wernight/bfgminer:latest
-    container_name: bfgminer-proxy-main
-    depends_on:
       bitcoin-main:
         condition: service_healthy
     restart: unless-stopped
@@ -73,7 +53,8 @@ services:
     environment:
       TERM: xterm
     command: >
-      bfgminer -S noauto -o http://${RPC_USER_TESTNET:-rpcuser_test}:${RPC_PASSWORD_TESTNET:-rpcpass_test}@bitcoin-testnet:18332
+      bfgminer -S noauto -o http://${BITCOIN_TESTNET_RPC_HOST:-bitcoin-testnet}:${BITCOIN_TESTNET_RPC_PORT:-18332}
+      -O ${RPC_USER_TESTNET:-rpcuser_test}:${RPC_PASSWORD_TESTNET:-rpcpass_test}
       --stratum-port 13333 --coinbase-addr ${PAYOUT_ADDRESS_TESTNET:-mzpJE5cWrFzGuVr1SidxEsRBDgFgPC5VmD}
       --no-submit-stale
     env_file: .env
@@ -82,7 +63,7 @@ services:
 
   # ---------- CKPool (MAINNET) ----------
   ckpool-main:
-    image: pinkyswear/ckpool-solo:latest
+    <<: *ckpool-image
     container_name: ckpool-solo-main
     depends_on:
       bitcoin-main:
@@ -118,7 +99,7 @@ services:
 
   # ---------- CKPool (TESTNET) ----------
   ckpool-test:
-    image: pinkyswear/ckpool-solo:latest
+    <<: *ckpool-image
     container_name: ckpool-solo-testnet
     depends_on:
       bitcoin-testnet:

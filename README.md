@@ -6,6 +6,11 @@ docker compose up -d
 docker logs -f bitcoind-main
 docker logs -f bitcoind-testnet
 ```
+
+> The CKPool containers now build from source via the `ckpool/Dockerfile` the
+> first time you run `docker compose up`. Ensure the host has internet access so
+> Docker can download the build dependencies and ckpool source code.
+
 - Mainnet Stratum (BFGMiner): `stratum+tcp://<HOST_IP>:3333`
 - Mainnet Stratum (CKPool):   `stratum+tcp://<HOST_IP>:3334`
 - Testnet Stratum (BFGMiner): `stratum+tcp://<HOST_IP>:13333`
