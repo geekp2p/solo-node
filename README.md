@@ -8,6 +8,7 @@
 
    ```bash
    ./ckpool/fetch-source.sh
+   git clone -b solobtc https://bitbucket.org/ckolivas/ckpool-solo.git
    ```
 
    > On Windows run the script from Git Bash (bundled with Git for Windows) so
