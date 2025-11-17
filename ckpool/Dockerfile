@@ -27,7 +27,7 @@ RUN if [ ! -f /src/autogen.sh ]; then \
 # Ensure autotools files are ready for Debian bookworm's libtool
 RUN mkdir -p m4 \
     && find . -type f \( -name 'autogen.sh' -o -name 'configure.ac' -o -name 'Makefile.am' \) -exec sed -i 's/\r$//' {} + \
-    && find . -name 'Makefile.am' -exec sed -i '/^[[:space:]]*ACLOCAL_AMFLAGS/d' {} + \
+    && find . -name 'configure.ac' -exec sed -i '/^[[:space:]]*AC_CONFIG_MACRO_DIRS/d' {} + \
     && chmod +x autogen.sh \
     && ./autogen.sh \
     && ./configure \
