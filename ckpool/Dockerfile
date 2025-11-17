@@ -24,9 +24,10 @@ RUN if [ ! -f /src/autogen.sh ]; then \
         exit 1; \
     fi && \
     rm -f /src/.gitkeep && rm -rf /src/.git
+# Ensure autotools files are ready for Debian bookworm's libtool
 RUN mkdir -p m4 \
-    && chmod +x autogen.sh \
-    && sed -i 's/\r$//' autogen.sh \
+    && sed -i 's/\r$//' autogen.sh configure.ac Makefile.am \
+    && sed -i '/^ACLOCAL_AMFLAGS/d' Makefile.am \
     && chmod +x autogen.sh \
     && ./autogen.sh \
     && ./configure \
