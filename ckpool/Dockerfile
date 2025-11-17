@@ -15,19 +15,24 @@ RUN apt-get update \
        libssl-dev \
        libcurl4-openssl-dev \
        uthash-dev \
+       dos2unix \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /src
+
+# ตรงนี้สมมติว่าโฟลเดอร์ ckpool ทั้งชุดอยู่ใน src/ ของ context
+# (ตามโครงที่เคยส่งมา)
 COPY src/ /src
+
 RUN if [ ! -f /src/autogen.sh ]; then \
         echo "ckpool sources are missing. Run ./ckpool/fetch-source.sh before building." >&2; \
         exit 1; \
     fi && \
     rm -f /src/.gitkeep && rm -rf /src/.git
-# Ensure autotools files are ready for Debian bookworm's libtool
+
+# 🔧 FIX หลัก: แปลง CRLF -> LF ในไฟล์ autotools ทั้งหมดก่อนรัน autogen
 RUN mkdir -p m4 \
-    && find . -type f \( -name 'autogen.sh' -o -name 'configure.ac' -o -name 'Makefile.am' \) -exec sed -i 's/\r$//' {} + \
-    && find . -name 'configure.ac' -exec sed -i '/^[[:space:]]*AC_CONFIG_MACRO_DIRS/d' {} + \
+    && find . -type f \( -name '*.m4' -o -name '*.ac' -o -name '*.am' -o -name '*.sh' \) -exec dos2unix {} + \
     && chmod +x autogen.sh \
     && ./autogen.sh \
     && ./configure \
