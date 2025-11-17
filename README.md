@@ -1,15 +1,45 @@
 # Solo Node (Mainnet + Testnet) for Avalon Nano 3S
 
 ## Quickstart
-```bash
-docker compose up -d
-docker logs -f bitcoind-main
-docker logs -f bitcoind-testnet
-```
 
-> The CKPool containers now build from source via the `ckpool/Dockerfile` the
-> first time you run `docker compose up`. Ensure the host has internet access so
-> Docker can download the build dependencies and ckpool source code.
+1. **Fetch the CKPool sources.** The CKPool containers compile the daemon at
+   build time, so populate `ckpool/src/` before starting Docker. From the repo
+   root run:
+
+   ```bash
+   ./ckpool/fetch-source.sh
+   ```
+
+   > On Windows run the script from Git Bash (bundled with Git for Windows) so
+   > the POSIX shell commands inside the script are available. If your machine
+   > cannot reach GitHub, clone `https://github.com/ckolivas/ckpool.git`
+   > manually, copy its contents into `ckpool/src/`, and ensure the
+   > `autogen.sh` file exists before continuing.
+
+2. **Optional: customize credentials and payout addresses.** Copy
+   `.env.example` to `.env` and edit any values you would like to override.
+   Unset variables fall back to the defaults baked into `docker-compose.yml`.
+
+3. **Bring up the stack.**
+
+   ```bash
+   docker compose up -d
+   ```
+
+4. **Tail the logs to verify sync and pool startup.**
+
+   ```bash
+   docker logs -f bitcoind-main
+   docker logs -f bitcoind-testnet
+   docker logs -f ckpool-solo-main
+   docker logs -f ckpool-solo-testnet
+   ```
+
+The CKPool builder image now reads the upstream sources from
+`ckpool/src/` inside this repository. Fetching them ahead of time keeps
+`docker compose up` from needing external GitHub access during the image
+build, which helps on networks where Docker cannot reach GitHub
+directly.
 
 - Mainnet Stratum (BFGMiner): `stratum+tcp://<HOST_IP>:3333`
 - Mainnet Stratum (CKPool):   `stratum+tcp://<HOST_IP>:3334`
