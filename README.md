@@ -13,9 +13,10 @@
 
    > On Windows run the script from Git Bash (bundled with Git for Windows) so
    > the POSIX shell commands inside the script are available. If your machine
-   > cannot reach Bitbucket, clone `https://bitbucket.org/ckolivas/ckpool-solo.git`
-   > (branch `solobtc`) manually, copy its contents into `ckpool/src/`, and
-   > ensure the `autogen.sh` file exists before continuing.
+   > cannot reach Bitbucket, clone
+   > `https://bitbucket.org/ckolivas/ckpool-solo.git` (branch `solobtc`)
+   > manually, copy its contents into `ckpool/src/`, and ensure the `autogen.sh`
+   > file exists before continuing
 
 2. **Optional: customize credentials and payout addresses.** Copy
    `.env.example` to `.env` and edit any values you would like to override.
