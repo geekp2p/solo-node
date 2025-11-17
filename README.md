@@ -12,9 +12,9 @@
 
    > On Windows run the script from Git Bash (bundled with Git for Windows) so
    > the POSIX shell commands inside the script are available. If your machine
-   > cannot reach GitHub, clone `https://github.com/ckolivas/ckpool.git`
-   > manually, copy its contents into `ckpool/src/`, and ensure the
-   > `autogen.sh` file exists before continuing.
+   > cannot reach Bitbucket, clone `https://bitbucket.org/ckolivas/ckpool-solo.git`
+   > (branch `solobtc`) manually, copy its contents into `ckpool/src/`, and
+   > ensure the `autogen.sh` file exists before continuing.
 
 2. **Optional: customize credentials and payout addresses.** Copy
    `.env.example` to `.env` and edit any values you would like to override.
@@ -37,9 +37,9 @@
 
 The CKPool builder image now reads the upstream sources from
 `ckpool/src/` inside this repository. Fetching them ahead of time keeps
-`docker compose up` from needing external GitHub access during the image
-build, which helps on networks where Docker cannot reach GitHub
-directly.
+`docker compose up` from needing external Bitbucket access during the
+image build, which helps on networks where Docker cannot reach
+bitbucket.org directly.
 
 - Mainnet Stratum (BFGMiner): `stratum+tcp://<HOST_IP>:3333`
 - Mainnet Stratum (CKPool):   `stratum+tcp://<HOST_IP>:3334`
