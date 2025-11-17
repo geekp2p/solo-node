@@ -24,7 +24,9 @@ RUN if [ ! -f /src/autogen.sh ]; then \
         exit 1; \
     fi && \
     rm -f /src/.gitkeep && rm -rf /src/.git
-RUN sed -i 's/\r$//' autogen.sh \
+RUN mkdir -p m4 \
+    && chmod +x autogen.sh \
+    && sed -i 's/\r$//' autogen.sh \
     && chmod +x autogen.sh \
     && ./autogen.sh \
     && ./configure \
