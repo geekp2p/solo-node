@@ -5,7 +5,6 @@ FROM debian:bookworm-slim AS builder
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
        ca-certificates \
-       git \
        build-essential \
        autoconf \
        automake \
@@ -19,7 +18,12 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /src
-RUN git clone --depth=1 https://github.com/ckolivas/ckpool.git .
+COPY src/ /src
+RUN if [ ! -f /src/autogen.sh ]; then \
+        echo "ckpool sources are missing. Run ./ckpool/fetch-source.sh before building." >&2; \
+        exit 1; \
+    fi && \
+    rm -f /src/.gitkeep && rm -rf /src/.git
 RUN ./autogen.sh \
     && ./configure \
     && make -j"$(nproc)"
