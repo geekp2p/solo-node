@@ -24,7 +24,9 @@ RUN if [ ! -f /src/autogen.sh ]; then \
         exit 1; \
     fi && \
     rm -f /src/.gitkeep && rm -rf /src/.git
-RUN ./autogen.sh \
+RUN sed -i 's/\r$//' autogen.sh \
+    && chmod +x autogen.sh \
+    && ./autogen.sh \
     && ./configure \
     && make -j"$(nproc)"
 
