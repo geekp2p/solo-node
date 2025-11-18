@@ -49,7 +49,9 @@ RUN apt-get update \
        libcurl4 \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=builder /src/ckpool /usr/local/bin/ckpool
+# ckpool's autotools tree outputs the binary under src/ckpool relative to the
+# repository root, so grab that path from the builder stage.
+COPY --from=builder /src/src/ckpool /usr/local/bin/ckpool
 
 ENTRYPOINT ["ckpool"]
 CMD ["-h"]
