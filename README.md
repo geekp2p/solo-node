@@ -23,8 +23,10 @@
    > `ckpool/src/`, ensuring the `autogen.sh` file exists before continuing.
 
 2. **Optional: customize credentials and payout addresses.** Copy
-   `.env.example` to `.env` and edit any values you would like to override.
-   Unset variables fall back to the defaults baked into `docker-compose.yml`.
+   `.env.example` to `.env` (the repo intentionally keeps its own `.env`
+   ignored so host-specific paths and secrets do not leak into Git) and edit
+   any values you would like to override. Unset variables fall back to the
+   defaults baked into `docker-compose.yml`.
 
 3. **Bring up the stack.**
 
