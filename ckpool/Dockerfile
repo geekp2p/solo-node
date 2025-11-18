@@ -43,6 +43,7 @@ FROM debian:bookworm-slim
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
        ca-certificates \
+       bash \
        libevent-2.1-7 \
        libjansson4 \
        libssl3 \
