@@ -93,30 +93,20 @@ services:
         condition: service_healthy
     restart: unless-stopped
     env_file: .env
-    command: |
-      /bin/sh -c 'cat <<EOF >/tmp/ckpool.conf
-      {
-        "btcd": [
-          {
-            "url": "http://$${BITCOIN_MAIN_RPC_HOST:-bitcoin-main}:$${BITCOIN_MAIN_RPC_PORT:-8332}",
-            "host": "$${BITCOIN_MAIN_RPC_HOST:-bitcoin-main}",
-            "port": $${BITCOIN_MAIN_RPC_PORT:-8332},
-            "user": "$${RPC_USER:-rpcuser_main}",
-            "pass": "$${RPC_PASSWORD:-rpcpass_main}",
-            "notify": true
-          }
-        ],
-        "btcaddress": "$${PAYOUT_ADDRESS:-1D7VcBnYgCW6zqNP4NmdS4kia4yLGHNfw}",
-        "btcsig": "/Solo via ckpool/",
-        "blockpoll": 100,
-        "nonce1length": 4,
-        "nonce2length": 8,
-        "update_interval": 30,
-        "mindiff": 1,
-        "startdiff": 32
-      }
-      EOF
-      exec ckpool -E -c /tmp/ckpool.conf'
+    entrypoint: ["/usr/local/bin/run-ckpool"]
+    environment:
+      CKPOOL_RPC_HOST: ${BITCOIN_MAIN_RPC_HOST:-bitcoin-main}
+      CKPOOL_RPC_PORT: ${BITCOIN_MAIN_RPC_PORT:-8332}
+      CKPOOL_RPC_USER: ${RPC_USER:-rpcuser_main}
+      CKPOOL_RPC_PASSWORD: ${RPC_PASSWORD:-rpcpass_main}
+      CKPOOL_PAYOUT_ADDRESS: ${PAYOUT_ADDRESS:-1D7VcBnYgCW6zqNP4NmdS4kia4yLGHNfw}
+      CKPOOL_SIGNATURE: "/Solo via ckpool/"
+      CKPOOL_BLOCKPOLL: 100
+      CKPOOL_NONCE1_LENGTH: 4
+      CKPOOL_NONCE2_LENGTH: 8
+      CKPOOL_UPDATE_INTERVAL: 30
+      CKPOOL_MINDIFF: 1
+      CKPOOL_STARTDIFF: 32
     ports:
       - "3334:3333"   # expose as 3334 (container listens 3333)
 
@@ -132,30 +122,20 @@ services:
         condition: service_healthy
     restart: unless-stopped
     env_file: .env
-    command: |
-      /bin/sh -c 'cat <<EOF >/tmp/ckpool.conf
-      {
-        "btcd": [
-          {
-            "url": "http://$${BITCOIN_TESTNET_RPC_HOST:-bitcoin-testnet}:$${BITCOIN_TESTNET_RPC_PORT:-18332}",
-            "host": "$${BITCOIN_TESTNET_RPC_HOST:-bitcoin-testnet}",
-            "port": $${BITCOIN_TESTNET_RPC_PORT:-18332},
-            "user": "$${RPC_USER_TESTNET:-rpcuser_test}",
-            "pass": "$${RPC_PASSWORD_TESTNET:-rpcpass_test}",
-            "notify": true
-          }
-        ],
-        "btcaddress": "$${PAYOUT_ADDRESS_TESTNET:-mzpJE5cWrFzGuVr1SidxEsRBDgFgPC5VmD}",
-        "btcsig": "/Solo via ckpool/",
-        "blockpoll": 100,
-        "nonce1length": 4,
-        "nonce2length": 8,
-        "update_interval": 30,
-        "mindiff": 1,
-        "startdiff": 32
-      }
-      EOF
-      exec ckpool -E -c /tmp/ckpool.conf'
+    entrypoint: ["/usr/local/bin/run-ckpool"]
+    environment:
+      CKPOOL_RPC_HOST: ${BITCOIN_TESTNET_RPC_HOST:-bitcoin-testnet}
+      CKPOOL_RPC_PORT: ${BITCOIN_TESTNET_RPC_PORT:-18332}
+      CKPOOL_RPC_USER: ${RPC_USER_TESTNET:-rpcuser_test}
+      CKPOOL_RPC_PASSWORD: ${RPC_PASSWORD_TESTNET:-rpcpass_test}
+      CKPOOL_PAYOUT_ADDRESS: ${PAYOUT_ADDRESS_TESTNET:-mzpJE5cWrFzGuVr1SidxEsRBDgFgPC5VmD}
+      CKPOOL_SIGNATURE: "/Solo via ckpool/"
+      CKPOOL_BLOCKPOLL: 100
+      CKPOOL_NONCE1_LENGTH: 4
+      CKPOOL_NONCE2_LENGTH: 8
+      CKPOOL_UPDATE_INTERVAL: 30
+      CKPOOL_MINDIFF: 1
+      CKPOOL_STARTDIFF: 32
     ports:
       - "13334:3333"  # expose as 13334 (container listens 3333)
 
