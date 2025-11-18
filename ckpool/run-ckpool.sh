@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 set -euo pipefail
 
 rpc_host="${CKPOOL_RPC_HOST:-bitcoin-main}"
@@ -44,3 +44,4 @@ cat <<JSON >/tmp/ckpool.conf
 JSON
 
 exec ckpool -E -c /tmp/ckpool.conf
+# exec ckpool -E -c /tmp/ckpool.conf
