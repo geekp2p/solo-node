@@ -20,6 +20,7 @@ services:
       interval: 30s
       timeout: 10s
       retries: 20
+      start_period: 15m
 
   # ---------- Bitcoin Core (TESTNET) ----------
   bitcoin-testnet:
@@ -42,6 +43,7 @@ services:
       interval: 30s
       timeout: 10s
       retries: 20
+      start_period: 15m
 
   # ---------- Stratum Proxy (MAINNET) via BFGMiner ----------
   bfgproxy-main:
