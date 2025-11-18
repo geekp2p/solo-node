@@ -56,7 +56,7 @@ services:
     environment:
       TERM: xterm
     command: >
-      bfgminer -S noauto -o http://${BITCOIN_MAIN_RPC_HOST:-bitcoin-main}:${BITCOIN_MAIN_RPC_PORT:-8332}
+      bfgminer -S noauto -o http://${RPC_USER:-rpcuser_main}:${RPC_PASSWORD:-rpcpass_main}@${BITCOIN_MAIN_RPC_HOST:-bitcoin-main}:${BITCOIN_MAIN_RPC_PORT:-8332}
       -O ${RPC_USER:-rpcuser_main}:${RPC_PASSWORD:-rpcpass_main}
       --stratum-port 3333 --coinbase-addr ${PAYOUT_ADDRESS:-1D7VcBnYgCW6zqNP4NmdS4kia4yLGHNfw}
       --no-submit-stale
