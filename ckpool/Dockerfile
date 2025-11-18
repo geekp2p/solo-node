@@ -52,6 +52,8 @@ RUN apt-get update \
 # ckpool's autotools tree outputs the binary under src/ckpool relative to the
 # repository root, so grab that path from the builder stage.
 COPY --from=builder /src/src/ckpool /usr/local/bin/ckpool
+COPY run-ckpool.sh /usr/local/bin/run-ckpool
+RUN chmod +x /usr/local/bin/run-ckpool
 
 ENTRYPOINT ["ckpool"]
 CMD ["-h"]
