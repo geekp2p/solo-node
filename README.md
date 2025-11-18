@@ -7,16 +7,20 @@
    root run:
 
    ```bash
-   ./ckpool/fetch-source.sh
-   git clone -b solobtc https://bitbucket.org/ckolivas/ckpool-solo.git
+   ./ckpool/fetch-source.sh [--force] [--url <git-url>] [--branch <branch>]
    ```
+
+   The script defaults to cloning
+   `https://bitbucket.org/ckolivas/ckpool-solo.git` (branch `solobtc`) but you
+   can also override these values via the CLI flags above or the environment
+   variables `CKPOOL_REPO_URL`, `CKPOOL_REPO_BRANCH`, and
+   `CKPOOL_FORCE_FETCH=1`. The `--force` flag is handy when you want to replace
+   an existing checkout with a fresh copy.
 
    > On Windows run the script from Git Bash (bundled with Git for Windows) so
    > the POSIX shell commands inside the script are available. If your machine
-   > cannot reach Bitbucket, clone
-   > `https://bitbucket.org/ckolivas/ckpool-solo.git` (branch `solobtc`)
-   > manually, copy its contents into `ckpool/src/`, and ensure the `autogen.sh`
-   > file exists before continuing
+   > cannot reach Bitbucket, manually clone the repo and copy its contents into
+   > `ckpool/src/`, ensuring the `autogen.sh` file exists before continuing.
 
 2. **Optional: customize credentials and payout addresses.** Copy
    `.env.example` to `.env` and edit any values you would like to override.
