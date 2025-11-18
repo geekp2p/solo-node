@@ -60,7 +60,6 @@ services:
       -O ${RPC_USER:-rpcuser_main}:${RPC_PASSWORD:-rpcpass_main}
       --stratum-port 3333 --coinbase-addr ${PAYOUT_ADDRESS:-1D7VcBnYgCW6zqNP4NmdS4kia4yLGHNfw}
       --no-submit-stale
-    env_file: .env
     ports:
       - "3333:3333"   # Stratum mainnet
 
@@ -79,7 +78,6 @@ services:
       -O ${RPC_USER_TESTNET:-rpcuser_test}:${RPC_PASSWORD_TESTNET:-rpcpass_test}
       --stratum-port 13333 --coinbase-addr ${PAYOUT_ADDRESS_TESTNET:-mzpJE5cWrFzGuVr1SidxEsRBDgFgPC5VmD}
       --no-submit-stale
-    env_file: .env
     ports:
       - "13333:13333" # Stratum testnet
 
@@ -94,7 +92,6 @@ services:
       bitcoin-main:
         condition: service_healthy
     restart: unless-stopped
-    env_file: .env
     entrypoint: ["/usr/local/bin/run-ckpool"]
     environment:
       CKPOOL_RPC_HOST: ${BITCOIN_MAIN_RPC_HOST:-bitcoin-main}
@@ -123,7 +120,6 @@ services:
       bitcoin-testnet:
         condition: service_healthy
     restart: unless-stopped
-    env_file: .env
     entrypoint: ["/usr/local/bin/run-ckpool"]
     environment:
       CKPOOL_RPC_HOST: ${BITCOIN_TESTNET_RPC_HOST:-bitcoin-testnet}

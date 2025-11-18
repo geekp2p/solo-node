@@ -22,11 +22,11 @@
    > cannot reach Bitbucket, manually clone the repo and copy its contents into
    > `ckpool/src/`, ensuring the `autogen.sh` file exists before continuing.
 
-2. **Optional: customize credentials and payout addresses.** Copy
-   `.env.example` to `.env` (the repo intentionally keeps its own `.env`
-   ignored so host-specific paths and secrets do not leak into Git) and edit
-   any values you would like to override. Unset variables fall back to the
-   defaults baked into `docker-compose.yml`.
+2. **Optional: customize credentials and payout addresses.** If you need to
+   override the defaults, copy `.env.example` to `.env` and edit the values you
+   would like to change. The repository keeps `.env` in `.gitignore` so your
+   host-specific paths and secrets stay local. If you skip this step the stack
+   simply uses the defaults baked into `docker-compose.yml`.
 
 3. **Bring up the stack.**
 
@@ -74,6 +74,8 @@ BITCOIN_TESTNET_RPC_PORT=18332
 ```
 
 Any values omitted from `.env` fall back to the defaults shown in this README.
+If the file does not exist at all Docker Compose still uses those defaults, so
+you only need to create `.env` when you actually want to override something.
 
 The CKPool containers now generate their `ckpool.conf` at startup using these
 environment variables, so pointing them at another node or payout address no
