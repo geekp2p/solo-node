@@ -1,0 +1,5 @@
+.env
+bitcoin-main-data/
+bitcoin-testnet-data/
+solo-node_bitcoin-main-data/
+solo-node_bitcoin-testnet-data/
