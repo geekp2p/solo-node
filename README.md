@@ -34,6 +34,14 @@
    docker compose up -d
    ```
 
+   If you refresh the CKPool sources (for example by re-running
+   `./ckpool/fetch-source.sh`), rebuild the containers so the new code is used:
+
+   ```bash
+   docker compose up --build --force-recreate
+   ```
+
+
 4. **Tail the logs to verify sync and pool startup.**
 
    ```bash
