@@ -24,10 +24,8 @@ cat <<JSON >/tmp/ckpool.conf
 {
   "btcd": [
     {
-      "url": "http://${rpc_host}:${rpc_port}",
-      "host": "${rpc_host}",
-      "port": ${rpc_port},
-      "user": "${rpc_user}",
+      "url": "${rpc_host}:${rpc_port}",
+      "auth": "${rpc_user}",
       "pass": "${rpc_pass}",
       "notify": true
     }
@@ -43,5 +41,5 @@ cat <<JSON >/tmp/ckpool.conf
 }
 JSON
 
-exec ckpool -E -c /tmp/ckpool.conf
+exec ckpool -c /tmp/ckpool.conf
 # exec ckpool -E -c /tmp/ckpool.conf
