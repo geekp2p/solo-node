@@ -57,15 +57,17 @@ The CKPool builder image now reads the upstream sources from
 image build, which helps on networks where Docker cannot reach
 bitbucket.org directly.
 
-- Mainnet Stratum (BFGMiner): `stratum+tcp://<HOST_IP>:3333`
-- Mainnet Stratum (CKPool):   `stratum+tcp://<HOST_IP>:3334`
-- Testnet Stratum (BFGMiner): `stratum+tcp://<HOST_IP>:13333`
-- Testnet Stratum (CKPool):   `stratum+tcp://<HOST_IP>:13334`
+- Mainnet Stratum (BFGMiner proxy, upstream CKPool): `stratum+tcp://<HOST_IP>:3333`
+- Mainnet Stratum (CKPool direct):                 `stratum+tcp://<HOST_IP>:3334`
+- Testnet Stratum (BFGMiner proxy, upstream CKPool): `stratum+tcp://<HOST_IP>:13333`
+- Testnet Stratum (CKPool direct):                   `stratum+tcp://<HOST_IP>:13334`
 
-BFGMiner proxies now send RPC credentials both in the URL and via `-O`. This
-works around platforms that strip URL credentials and ensures bitcoind always
-receives authentication. Customize those values via `.env` if you need
-something different from the defaults.
+BFGMiner proxies now connect to the CKPool stratum instead of hitting
+`bitcoind`'s RPC interface directly. This avoids the HTTP/JSON decode errors
+seen when miners point at the proxy ports during initial startup. If you want
+the proxies to forward to an external CKPool endpoint instead of the bundled
+containers, set `CKPOOL_MAIN_HOST`/`CKPOOL_MAIN_PORT` or
+`CKPOOL_TESTNET_HOST`/`CKPOOL_TESTNET_PORT` in `.env`.
 
 Default RPC credentials and payout addresses are baked into the
 `docker-compose.yml` so the stack works out of the box. If you would like to
@@ -84,6 +86,11 @@ BITCOIN_MAIN_RPC_HOST=10.1.1.243
 BITCOIN_MAIN_RPC_PORT=8332
 BITCOIN_TESTNET_RPC_HOST=10.1.1.243
 BITCOIN_TESTNET_RPC_PORT=18332
+# Point the BFGMiner proxies at a different CKPool stratum endpoint if needed
+CKPOOL_MAIN_HOST=ckpool.example.com
+CKPOOL_MAIN_PORT=3333
+CKPOOL_TESTNET_HOST=ckpool-testnet.example.com
+CKPOOL_TESTNET_PORT=3333
 ```
 
 Any values omitted from `.env` fall back to the defaults shown in this README.

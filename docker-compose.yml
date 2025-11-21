@@ -50,15 +50,15 @@ services:
     image: wernight/bfgminer:latest
     container_name: bfgminer-proxy-mainnet
     depends_on:
-      bitcoin-main:
-        condition: service_healthy
+      ckpool-main:
+        condition: service_started
     restart: unless-stopped
     environment:
       TERM: xterm
     command: >
       bfgminer -S noauto
-      -o http://${BITCOIN_MAIN_RPC_HOST:-bitcoin-main}:${BITCOIN_MAIN_RPC_PORT:-8332}
-      -O ${RPC_USER:-rpcuser_main}:${RPC_PASSWORD:-rpcpass_main}
+      -o stratum+tcp://${CKPOOL_MAIN_HOST:-ckpool-solo-main}:${CKPOOL_MAIN_PORT:-3333}
+      -O ${PAYOUT_ADDRESS:-1D7VcBnYgCW6zqNP4NmdS4kia4yLGHNfw}:x
       --stratum-port 3333 --coinbase-addr ${PAYOUT_ADDRESS:-1D7VcBnYgCW6zqNP4NmdS4kia4yLGHNfw}
       --no-submit-stale
     ports:
@@ -69,15 +69,15 @@ services:
     image: wernight/bfgminer:latest
     container_name: bfgminer-proxy-testnet
     depends_on:
-      bitcoin-testnet:
-        condition: service_healthy
+      ckpool-test:
+        condition: service_started
     restart: unless-stopped
     environment:
       TERM: xterm
     command: >
       bfgminer -S noauto
-      -o http://${BITCOIN_TESTNET_RPC_HOST:-bitcoin-testnet}:${BITCOIN_TESTNET_RPC_PORT:-18332}
-      -O ${RPC_USER_TESTNET:-rpcuser_test}:${RPC_PASSWORD_TESTNET:-rpcpass_test}
+      -o stratum+tcp://${CKPOOL_TESTNET_HOST:-ckpool-solo-testnet}:${CKPOOL_TESTNET_PORT:-3333}
+      -O ${PAYOUT_ADDRESS_TESTNET:-mzpJE5cWrFzGuVr1SidxEsRBDgFgPC5VmD}:x
       --stratum-port 13333 --coinbase-addr ${PAYOUT_ADDRESS_TESTNET:-mzpJE5cWrFzGuVr1SidxEsRBDgFgPC5VmD}
       --no-submit-stale
     ports:
