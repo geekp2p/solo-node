@@ -62,10 +62,10 @@ bitbucket.org directly.
 - Testnet Stratum (BFGMiner): `stratum+tcp://<HOST_IP>:13333`
 - Testnet Stratum (CKPool):   `stratum+tcp://<HOST_IP>:13334`
 
-The BFGMiner proxy now passes explicit RPC credentials via `-O` so the upstream
-bitcoind always receives the username and password, even on platforms where
-embedding them in the URL is stripped. Customize those values via `.env` if you
-need something different from the defaults.
+BFGMiner proxies now send RPC credentials both in the URL and via `-O`. This
+works around platforms that strip URL credentials and ensures bitcoind always
+receives authentication. Customize those values via `.env` if you need
+something different from the defaults.
 
 Default RPC credentials and payout addresses are baked into the
 `docker-compose.yml` so the stack works out of the box. If you would like to
