@@ -155,6 +155,13 @@ it to report that the Docker engine is running before rerunning `docker
 compose up`. If the problem persists, restart Docker Desktop or reboot the
 host to re-establish the named pipe connection.
 
+#### `Stratum connect failed ... Could not resolve host: ckpool-testnet.example.com`
+
+The BFGMiner proxies default to the internal CKPool containers
+(`ckpool-solo-main` and `ckpool-solo-testnet`). If you set
+`CKPOOL_MAIN_HOST`/`CKPOOL_TESTNET_HOST` in `.env`, ensure those hostnames
+resolve from inside the Docker network. Leaving these variables commented in
+`.env` will use the built-in container names that work out of the box.
 
 ## Payout addresses in this pack
 - Mainnet: `1D7VcBnYgCW6zqNP4NmdS4kia4yLGHNfw`
